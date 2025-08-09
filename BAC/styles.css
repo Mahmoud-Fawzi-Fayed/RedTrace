@@ -1,0 +1,216 @@
+/* styles.css — Dark-only theme with improved navbar + UI */
+
+:root{
+  --bg:#0b0f16;
+  --panel:#121826;
+  --panel-2:#0f1724;
+  --border:#1d2637;
+  --text:#e6ebff;
+  --muted:#a5b1d8;
+  --accent:#64b5ff;
+  --accent-2:#66f0a9;
+  --danger:#ff6b6b;
+  --shadow: 0 8px 24px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background: radial-gradient(1200px 700px at 10% -10%, #0f1421 0%, var(--bg) 45%) no-repeat fixed;
+  color:var(--text);
+  font: 15px/1.55 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Color Emoji", "Apple Color Emoji", sans-serif;
+}
+
+/* Containers */
+.container{max-width:1100px;margin:24px auto;padding:0 16px}
+.container-sm{max-width:900px;margin:0 auto;padding:0 16px}
+
+/* Header / Navbar */
+.site-header{
+  position:sticky; top:0; z-index:50;
+  display:flex; align-items:center; gap:16px;
+  padding:12px 16px;
+  background:rgba(15,23,36,.85);
+  backdrop-filter:saturate(140%) blur(8px);
+  border-bottom:1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.brand .brand-link{
+  display:flex; align-items:center; gap:10px;
+  font-weight:700; letter-spacing:.3px; color:var(--text); text-decoration:none;
+}
+.brand .fa-shield-halved{color:var(--accent)}
+
+.nav{
+  margin-left:6px;
+}
+.nav-list{
+  list-style:none; margin:0; padding:0;
+  display:flex; flex-wrap:wrap; gap:8px;
+}
+.nav-list a{
+  --pad-y:8px; --pad-x:12px;
+  display:flex; align-items:center; gap:8px;
+  padding:var(--pad-y) var(--pad-x);
+  color:var(--muted); text-decoration:none;
+  border-radius:10px;
+  border:1px solid transparent;
+  transition: all .18s ease;
+}
+.nav-list a:hover{
+  color:var(--text);
+  background:rgba(255,255,255,.05);
+  border-color:var(--border);
+}
+.nav-list a.active{
+  color:#001014;
+  background:linear-gradient(180deg, var(--accent), #57a3ff);
+  border-color: transparent;
+}
+.nav-list a.active i{color:#001014}
+
+.nav-actions{
+  margin-left:auto; display:flex; align-items:center; gap:10px;
+}
+.user-chip{
+  display:flex; align-items:center; gap:8px;
+  padding:6px 10px; border-radius:999px;
+  background:var(--panel-2); color:var(--muted);
+  border:1px solid var(--border);
+}
+.user-chip i{color:var(--accent-2)}
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 12px; border-radius:10px; text-decoration:none;
+  font-weight:600; letter-spacing:.2px;
+  transition:transform .16s ease, background .16s ease, color .16s ease, border-color .16s ease;
+  border:1px solid transparent;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-accent{ background:var(--accent); color:#001014; }
+.btn-outline{ background:transparent; color:var(--text); border-color:var(--border); }
+.btn-outline:hover{ background:rgba(255,255,255,.05); }
+
+/* Mobile hamburger (checkbox hack) */
+.nav-toggle{ display:none; }
+.nav-burger{ display:none; cursor:pointer; margin-left:auto; }
+.nav-burger span{
+  display:block; width:22px; height:2px; background:var(--text); margin:5px 0; transition:all .2s ease;
+}
+
+@media (max-width: 980px){
+  .nav{ order:3; width:100%; }
+  .nav-list{ display:none; flex-direction:column; gap:6px; padding:8px 0; }
+  .nav-actions{ order:2; }
+  .nav-burger{ display:block; }
+  .nav-toggle:checked ~ .nav .nav-list{ display:flex; }
+}
+
+/* Cards / panels */
+.card{
+  background:linear-gradient(180deg, var(--panel), var(--panel-2));
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:18px;
+  box-shadow: var(--shadow);
+}
+.card h1,.card h2,.card h3{ margin:0 0 10px; }
+
+/* Forms */
+label{ display:block; margin:10px 0 6px; color:var(--muted); }
+.input, input[type="text"], input[type="password"], input[type="email"], textarea, select{
+  width:100%; padding:10px 12px; color:var(--text);
+  background:#0e1522; border:1px solid var(--border); border-radius:10px; outline:none;
+  transition:border-color .15s ease, box-shadow .15s ease;
+}
+.input:focus, input:focus, textarea:focus, select:focus{
+  border-color:var(--accent); box-shadow:0 0 0 3px rgba(100,181,255,.15);
+}
+.form-actions{ display:flex; gap:10px; margin-top:12px; }
+
+/* Alerts */
+.alert{
+  border-radius:10px; padding:10px 12px; margin:14px 0;
+  border:1px solid var(--border); display:flex; align-items:center; gap:8px;
+}
+.alert-ok{ background:rgba(102,240,169,.08); color:#c0ffe3; border-color:rgba(102,240,169,.25); }
+.alert-error{ background:rgba(255,107,107,.08); color:#ffd0d0; border-color:rgba(255,107,107,.25); }
+
+/* Tables */
+.table{ width:100%; border-collapse:separate; border-spacing:0; }
+.table th,.table td{ padding:10px 12px; border-bottom:1px solid var(--border); }
+.table th{ color:var(--muted); font-weight:700; text-align:left; }
+.table tr:hover td{ background:rgba(255,255,255,.03); }
+
+/* Footer */
+.site-footer{
+  margin-top:30px;
+  border-top:1px solid var(--border);
+  background:#0c121f;
+  color:var(--muted);
+  padding:18px 0;
+  text-align:center;
+}
+
+/* Utility */
+.mt-2{margin-top:.5rem}
+.mt-3{margin-top:1rem}
+.center{display:flex;justify-content:center;align-items:center}
+.w-600{max-width:600px;margin:0 auto}
+
+/* Full-height layout so footer stays at bottom */
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main.container {
+  flex: 1; /* pushes footer down */
+}
+
+/* Footer styling remains the same */
+.site-footer {
+  margin-top: 0; /* remove top margin so it's tight with content */
+}
+
+/* --- Auth card sizing (no HTML changes required) --- */
+
+/* If you DID add class="card login-card" */
+.card.login-card{
+  width: 480px;
+  max-width: 92vw;
+  margin: 64px auto;
+}
+.card.login-card .btn{ width:100%; justify-content:center }
+
+/* If you did NOT add a class, target by content using :has() (Chrome/Edge/Brave/Safari support) */
+@supports(selector(:has(*))) {
+  main.container .card:has(form input[type="password"]) {
+    width: 600px;
+    max-width: 92vw;
+    margin: 64px auto;
+  }
+  main.container .card:has(form input[type="password"]) .btn{
+    width:100%;
+    justify-content:center;
+  }
+}
+
+.flag-banner{
+  margin-top: 14px;
+  background: rgba(102,240,169,.12);
+  border: 1px solid rgba(102,240,169,.35);
+  color: #d6ffef;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.flag-banner i{ color:#66f0a9; }

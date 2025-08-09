@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SQL Injection Demo</title>
+  <style>
+    /* ====== Global Dark Mode Style ====== */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #121212;
+      color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    nav {
+      background-color: #1f1f1f;
+      padding: 15px;
+      text-align: center;
+      border-bottom: 1px solid #333;
+    }
+
+    nav a {
+      color: #8ab4f8;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+      color: #8ab4f8;
+    }
+
+    h2 {
+      color: #ffffff;
+      border-left: 5px solid #3498db;
+      padding-left: 10px;
+      margin-top: 40px;
+    }
+
+    form {
+      background: #1e1e1e;
+      padding: 20px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+
+    form:hover {
+      transform: scale(1.01);
+      box-shadow: 0 0 25px rgba(0,0,0,0.6);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #ddd;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      padding: 10px;
+      margin-bottom: 15px;
+      width: 90%;
+      border: 1px solid #333;
+      background-color: #2b2b2b;
+      color: #fff;
+      border-radius: 4px;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      border-color: #3498db;
+      outline: none;
+    }
+
+    input[type="submit"] {
+      background-color: #3498db;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #2980b9;
+    }
+
+    footer {
+      text-align: center;
+      margin: 40px 0 20px;
+      font-size: 14px;
+      color: #888;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">🏠 Home</a>
+    <a href="logs.php">🧾 View Logs</a>
+    <a href="generate_txt.php">📄 Download TXT Report</a>
+  </nav>
+
+  <h1>💥 SQL Injection Demo Lab</h1>
+
+  <form action="classic_sqli.php" method="get">
+    <h2>1. Classic Login <span style="color: crimson;">(Vulnerable)</span></h2>
+    <label>Username:</label>
+    <input type="text" name="username" />
+    <label>Password:</label>
+    <input type="password" name="password" />
+    <input type="submit" value="Login">
+  </form>
+
+  <form action="union_sqli.php" method="get">
+    <h2>2. Union-Based SQLi</h2>
+    <label>Product ID:</label>
+    <input type="text" name="id" />
+    <input type="submit" value="View Product">
+  </form>
+
+  <form action="blind_boolean.php" method="get">
+    <h2>3. Boolean-Based Blind SQLi</h2>
+    <label>Product ID:</label>
+    <input type="text" name="id" />
+    <input type="submit" value="Test Boolean Injection">
+  </form>
+
+  <form action="blind_time.php" method="get">
+    <h2>4. Time-Based Blind SQLi</h2>
+    <label>Product ID:</label>
+    <input type="text" name="id" />
+    <input type="submit" value="Test Time Injection">
+  </form>
+
+  <form action="error_sqli.php" method="get">
+    <h2>5. Error-Based SQLi</h2>
+    <label>Product ID:</label>
+    <input type="text" name="id" />
+    <input type="submit" value="Trigger Error">
+  </form>
+
+  <form action="cast_error.php" method="get">
+    <h2>6. CAST-Based SQLi</h2>
+    <label>Product ID (try CAST injection):</label>
+    <input type="text" name="id" />
+    <input type="submit" value="Test CAST Injection">
+  </form>
+
+  <form action="oracle_like_error.php" method="get">
+    <h2>7. Oracle-style Error SQLi (Simulated)</h2>
+    <label>Product ID:</label>
+    <input type="text" name="id" />
+    <input type="submit" value="Test Oracle-style Injection">
+  </form>
+
+  <form action="dump_tables.php" method="get">
+    <h2>8. Dump Table Columns</h2>
+    <label>Table Name (e.g. <code>users</code>):</label>
+    <input type="text" name="table" />
+    <input type="submit" value="List Columns">
+  </form>
+
+  <form action="secure_login.php" method="get">
+    <h2>9. Secure Login <span style="color: lightgreen;">(Safe)</span></h2>
+    <label>Username:</label>
+    <input type="text" name="username" />
+    <label>Password:</label>
+    <input type="password" name="password" />
+    <input type="submit" value="Login">
+  </form>
+
+  <footer>
+    ⚠️ For educational and ethical purposes only — &copy; 2025 SQLi Demo Lab
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+<?php
+// config.php
+const DB_HOST = '127.0.0.1';
+const DB_NAME = 'xss_lab';
+const DB_USER = 'root';
+const DB_PASS = '';

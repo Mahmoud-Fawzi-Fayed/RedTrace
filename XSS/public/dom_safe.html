@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DOM XSS – Safe</title>
+  <link rel="stylesheet" href="/XSS/public/assets/styles.css" />
+  <script>(function(){try{if(localStorage.getItem('theme')==='dark'){document.documentElement.classList.add('dark');}}catch(e){}})();</script>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="lab-title"><span class="burst">💥</span><span class="accent">XSS</span> Demo Lab</div>
+    <div class="lab-subnav">
+      <a href="index.php">Home</a>
+      <a href="search_vuln.php">Reflected (vuln)</a>
+      <a href="search_safe.php">Reflected (safe)</a>
+      <a href="dom_vuln.html">DOM (vuln)</a>
+      <a href="dom_safe.html">DOM (safe)</a>
+      <a href="new_post.php">New Post</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="section-card">
+      <h3>3. DOM XSS <span class="badge-ok">(Safe)</span></h3>
+      <p>Renders using <code>textContent</code>; scripts won’t run.</p>
+      <div class="main-card" style="margin:14px 0;padding:14px;">
+        <div class="muted">Current hash:</div>
+        <pre id="hash"></pre>
+        <div class="muted">Parsed <code>msg</code> (safely rendered below):</div>
+        <pre id="raw"></pre>
+      </div>
+      <div class="muted">Safe output:</div>
+      <div id="out" style="border:1px solid var(--border);padding:8px;border-radius:8px;"></div>
+    </div>
+  </div>
+
+  <script>
+    function getMsg(){
+      const qs=new URLSearchParams(location.search);
+      if(qs.has('msg')) return qs.get('msg')||'';
+      if(location.hash.startsWith('#msg=')){
+        try{return decodeURIComponent(location.hash.slice(5));}catch{return location.hash.slice(5);}
+      }
+      return '';
+    }
+    function render(){
+      const msg=getMsg();
+      document.getElementById('out').textContent=msg; // ✅ safe sink
+      document.getElementById('raw').textContent=msg;
+      document.getElementById('hash').textContent=location.hash||'(none)';
+    }
+    window.addEventListener('hashchange',render); render();
+  </script>
+</body>
+</html>
